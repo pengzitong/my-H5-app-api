@@ -1,0 +1,7 @@
+2019-07-21 12:01:52.654 [main] ERROR com.logic.web.superadmin.AreaController - javax.imageio.IIOException: Can't read input file!
+2019-07-21 12:13:01.691 [main] ERROR com.logic.web.superadmin.AreaController - javax.imageio.IIOException: Can't read input file!
+2019-07-21 12:13:05.920 [main] ERROR com.logic.web.superadmin.AreaController - java.io.FileNotFoundException: /home/xiangze/image/upload/item/shop/50/2019072112130469803.jpeg (No such file or directory)
+2019-07-21 12:17:00.928 [main] ERROR com.logic.web.superadmin.AreaController - java.io.FileNotFoundException: /home/xiangze/image/upload/item/shop/51/2019072112165921969.jpeg (No such file or directory)
+2019-07-21 12:21:45.766 [main] ERROR com.logic.web.superadmin.AreaController - java.io.FileNotFoundException: /home/xiangze/image/upload/item/shop/54/2019072112214469769.jpeg (No such file or directory)
+2019-07-21 12:23:13.412 [main] ERROR com.logic.web.superadmin.AreaController - java.io.FileNotFoundException: /home/xiangze/image/upload/item/shop/55/2019072112231258495.jpeg (No such file or directory)
+2019-07-21 12:35:48.702 [main] ERROR com.logic.web.superadmin.AreaController - java.io.FileNotFoundException: /home/xiangze/image/upload/item/shop/57/2019072112354742051.jpeg (No such file or directory)

@@ -1,0 +1,12 @@
+2019-12-03 18:06:01.638 [http-bio-8080-exec-5] DEBUG com.logic.dao.ShopCategoryDao.queryShopCategory - ==>  Preparing: SELECT * FROM tb_shop_category WHERE 1=1 and parent_id is not null ORDER BY priority DESC 
+2019-12-03 18:06:01.672 [http-bio-8080-exec-5] DEBUG com.logic.dao.ShopCategoryDao.queryShopCategory - ==> Parameters: 
+2019-12-03 18:06:01.717 [http-bio-8080-exec-5] DEBUG com.logic.dao.ShopCategoryDao.queryShopCategory - <==      Total: 1
+2019-12-03 18:06:01.725 [http-bio-8080-exec-5] DEBUG com.logic.dao.AreaDao.queryArea - ==>  Preparing: SELECT * FROM tb_area ORDER BY priority DESC 
+2019-12-03 18:06:01.725 [http-bio-8080-exec-5] DEBUG com.logic.dao.AreaDao.queryArea - ==> Parameters: 
+2019-12-03 18:06:01.737 [http-bio-8080-exec-5] DEBUG com.logic.dao.AreaDao.queryArea - <==      Total: 2
+2019-12-03 18:09:33.892 [http-bio-8080-exec-1] DEBUG com.logic.dao.ShopCategoryDao.queryShopCategory - ==>  Preparing: SELECT * FROM tb_shop_category WHERE 1=1 and parent_id is not null ORDER BY priority DESC 
+2019-12-03 18:09:33.921 [http-bio-8080-exec-1] DEBUG com.logic.dao.ShopCategoryDao.queryShopCategory - ==> Parameters: 
+2019-12-03 18:09:33.939 [http-bio-8080-exec-1] DEBUG com.logic.dao.ShopCategoryDao.queryShopCategory - <==      Total: 1
+2019-12-03 18:09:33.944 [http-bio-8080-exec-1] DEBUG com.logic.dao.AreaDao.queryArea - ==>  Preparing: SELECT * FROM tb_area ORDER BY priority DESC 
+2019-12-03 18:09:33.945 [http-bio-8080-exec-1] DEBUG com.logic.dao.AreaDao.queryArea - ==> Parameters: 
+2019-12-03 18:09:33.946 [http-bio-8080-exec-1] DEBUG com.logic.dao.AreaDao.queryArea - <==      Total: 2

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 启用基于Spring 基于 annotation的DI，使用户可以在Spring MVC中使用Spring的强大功能
+            激活@Required @Autowired @Resource这样的注解。
+            不过如果使用了<context:component-scan>标签，扫描所有类型的bean的情况下，也就是不使用
+            <context:include-filter>和<context:exclude-filter>这两个子标签的情况下是可以不用配置这个标签的 -->
+    <!--<context:annotation-config/>-->
+
+    <!-- 4.扫描web相关的bean -->
+    <!--<context:component-scan base-package="com.zjh.controller">-->
+        <!-- 只管理@Controller的bean，忽略其他类型的bean，如Service -->
+        <!--<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>-->
+    <!--</context:component-scan>-->
+
+    <!-- HandlerMapping 无需配置，SpringMVC可以默认启动，DefaultAnnotationHandlerMapping annotation-driven HandlerMapping -->
+
+    <!-- 配置SpringMVC -->
+    <!-- 1.开启SpringMVC注解模式 -->
+    <!-- 简化配置：
+        (1)自动注册DefaultAnootationHandlerMapping,AnotationMethodHandlerAdapter
+        (2)提供一些列：数据绑定，数字和日期的format @NumberFormat, @DateTimeFormat, xml,json默认读写支持
+    -->
+    <mvc:annotation-driven />
+
+    <!-- 2.静态资源默认servlet配置
+        (1)加入对静态资源的处理：js,gif,png
+        (2)允许使用"/"做整体映射
+		这两个都是处理静态资源的，区别可以理解成一个是指定一个自定义的serlvet来专门处理相应的静态资源，如果不指定
+		会默认找default名字的servlet
+		而<mvc:resources>的好处可以理解成是静态资源可以在我们项目中的任意位置配置，只需要将对应的位置声明即可
+     -->
+    <mvc:default-servlet-handler/>
+    <mvc:resources location="/resources/" mapping="/resources/**"/>
+
+    <!-- ViewResolver:视图解析器。可以配置多个 但是一定要将这个ViewResolver(InternalResourceViewResolver)
+          放到最后 -->
+    <!-- 解析json格式的传参和封装数据到页面，注意spring的版本和对应的配置方式 -->
+
+
+    <!--定义视图解析器-->
+    <bean id="viewResolver"
+        class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/html/"></property>
+        <property name="suffix" value=".html"></property>
+    </bean>
+    <!--文件上传解析器-->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="utf-8"></property>
+        <!--//文件上传最大尺寸   1024*1024*20-->
+        <property name="maxUploadSize" value="20971520"></property>
+        <!--最大内存-->
+        <property name="maxInMemorySize" value="20971520"></property>
+    </bean>
+
+    <bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+        <property name="config">
+            <bean class="com.google.code.kaptcha.util.Config">
+                <constructor-arg>
+                    <props>
+                        <prop key="kaptcha.border">no</prop>
+                        <prop key="kaptcha.border.color">105,179,90</prop>
+                        <prop key="kaptcha.textproducer.font.color">red</prop>
+                        <prop key="kaptcha.image.width">250</prop>
+                        <prop key="kaptcha.textproducer.font.size">90</prop>
+                        <prop key="kaptcha.image.height">100</prop>
+                        <prop key="kaptcha.session.key">code</prop>
+                        <prop key="kaptcha.textproducer.char.length">4</prop>
+                        <prop key="kaptcha.textproducer.font.names">宋体,楷体,微软雅黑</prop>
+                    </props>
+                </constructor-arg>
+            </bean>
+        </property>
+    </bean>
+    <!-- spring-4.2以后 -->
+    <!--<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">-->
+        <!--<property name="mediaTypes">-->
+            <!--<value>-->
+                <!--html=text/html-->
+                <!--json=application/json-->
+                <!--json=application/callback-->
+                <!--image=image/*-->
+            <!--</value>-->
+        <!--</property>-->
+        <!--<property name="defaultContentType" value="text/html"/>-->
+    <!--</bean>-->
+
+    <!--<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">-->
+        <!--<property name="contentNegotiationManager" ref="contentNegotiationManager"/>-->
+        <!--<property name="defaultViews">-->
+            <!--<list>-->
+                <!--<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <!--<bean id="multipartResolver"-->
+          <!--class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
+        <!--<property name="maxUploadSize" value="209715200" />-->
+        <!--<property name="defaultEncoding" value="UTF-8" />-->
+        <!--<property name="resolveLazily" value="true" />-->
+    <!--</bean>-->
+
+    <!-- 3.配置jsp 显示ViewResolver -->
+    <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+        <!--<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />-->
+        <!--<property name="prefix" value="/WEB-INF/jsp/" />-->
+        <!--<property name="suffix" value=".jsp" />-->
+    <!--</bean>-->
+
+    <!-- 激活组件扫描功能,扫描aop的相关组件组件 -->
+    <context:component-scan base-package="com.logic.web"/>
+    <!-- 启动对@AspectJ注解的支持 -->
+    <!--<aop:aspectj-autoproxy proxy-target-class="false" />-->
+</beans>
