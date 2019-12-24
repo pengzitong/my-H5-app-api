@@ -1,3 +1,6 @@
+#项目图片存放地址
+/Users/pzt/Documents/java_project_image/upload/item/shop
+
 #SSM 重点知识
 Spring MVC : DispatcherServlet
 Spring : IOC和AOP

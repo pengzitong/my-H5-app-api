@@ -106,10 +106,11 @@ public class ShopManagementController {
         }
         //2.注册店铺
         if(shop != null && shopImg != null){
-//            PersonInfo owner = new PersonInfo();
-//            owner.setUserId(1L);
-            PersonInfo owner = (PersonInfo)request.getSession().getAttribute("user");
+            PersonInfo owner = new PersonInfo();
+            owner.setUserId(1L);
             shop.setOwner(owner);
+//            PersonInfo owner = (PersonInfo)request.getSession().getAttribute("user");
+//            shop.setOwner(owner);
 
 //            File shopImgFile = new File(PathUtil.getImgBasePath() + ImageUtil.getRandomFileName());
 //            try {
@@ -186,6 +187,55 @@ public class ShopManagementController {
 //        }
 //    }
 
+    @RequestMapping(value = "/getShopManagementInfo",method = RequestMethod.GET)
+    @ResponseBody
+    private Map<String,Object> getShopManagementInfo(HttpServletRequest request){
+        Map<String,Object> modelMap = new HashMap<String, Object>();
+        long shopId = HttpServletRequestUtil.getLong(request,"shopId");
+        if(shopId <= 0){
+            Object currentShopObj = request.getSession().getAttribute("currentShop");
+            if(currentShopObj == null){
+                //重定向
+                modelMap.put("redirect",true);
+                modelMap.put("url","xxxx");
+            }else{
+                Shop currentShop = (Shop) currentShopObj;
+                modelMap.put("redirect",false);
+                modelMap.put("shopId",currentShop.getShopId());
+            }
+        }else{
+            Shop currentShop = new Shop();
+            currentShop.setShopId(shopId);
+            request.getSession().setAttribute("currentShop",currentShop);
+            modelMap.put("redirect",false);
+            modelMap.put("shopId",currentShop.getShopId());
+        }
+        return modelMap;
+    }
+
+    @RequestMapping(value = "/getShopList",method = RequestMethod.GET)
+    @ResponseBody
+    private Map<String,Object> getShopList(HttpServletRequest request){
+        Map<String,Object> modelMap = new HashMap<String,Object>();
+        PersonInfo owner = new PersonInfo();
+        owner.setUserId(1L);
+        request.getSession().setAttribute("user",owner);
+        owner = (PersonInfo) request.getSession().getAttribute("user");
+        try{
+            Shop shopCondition = new Shop();
+            shopCondition.setOwner(owner);
+            ShopExecution se = shopService.queryShopList(shopCondition,0,100);
+            modelMap.put("success",true);
+            modelMap.put("user",owner);
+            modelMap.put("shopList",se.getShopList());
+        }catch (Exception e){
+            modelMap.put("success",false);
+            modelMap.put("errorMsg",e.getMessage());
+
+        }
+        return modelMap;
+    }
+
     @RequestMapping(value = "/getByShopId",method = RequestMethod.POST)
     @ResponseBody
     private Map<String,Object> getByShopId(@RequestBody Shop shop){
@@ -195,8 +245,8 @@ public class ShopManagementController {
             try{
                 Shop shopInfo = shopService.getByShopId(shop.getShopId());
                 modelMap.put("shop",shopInfo);
-                List<Area> areaList = areaService.getAreaList();
-                modelMap.put("areaList",areaList);
+//                List<Area> areaList = areaService.getAreaList();
+//                modelMap.put("areaList",areaList);
                 modelMap.put("success",true);
             }catch (Exception e){
                 modelMap.put("success",false);

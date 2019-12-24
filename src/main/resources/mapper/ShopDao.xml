@@ -16,6 +16,7 @@
         <result column="last_edit_time" property="lastEditTime"></result>
         <result column="enable_status" property="enableStatus"></result>
         <result column="advice" property="advice"></result>
+        <!--复合类型-->
         <association column="area_id" property="area" javaType="com.logic.entity.Area">
             <id column="area_id" property="areaId"></id>
             <result column="area_name" property="areaName"></result>
